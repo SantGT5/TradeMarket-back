@@ -1,7 +1,7 @@
 // Config express to crete routers server
 const router = require("express").Router();
 
-// Criptografar PassWord
+// Encrypt password
 const bcrypt = require("bcryptjs");
 const salt_rounds = 10;
 
@@ -36,7 +36,7 @@ router.post("/signup", async (req, res) => {
       });
     }
 
-    // Searching for email, if email already existe in the DB, back-end will send error message.
+    // Searching for email, if email already existed in the DB, back-end will send error message.
     const userEmail = await UserModel.findOne({ email });
 
     if (userEmail) {
@@ -69,7 +69,7 @@ router.post("/login", async (req, res) => {
     // Searching for user email.
     const user = await UserModel.findOne({ email });
 
-    // If user email does not existe, that means user is not registered.
+    // If user email does not existed, that means user is not registered.
     // Validating email.
     if (
       !email ||
@@ -123,11 +123,11 @@ router.post(
       // Request current password and new password from body.
       const { currentPassword, newPassword, confirmPassword } = req.body;
 
-      // Search for logged user using emial.
+      // Search for logged user using email.
       const loggedInUser = req.currentUser.email;
       const user = await UserModel.findOne({ loggedInUser });
 
-      // If some field is empyt error message will be send
+      // If some field is empty error message will be send
       if (!currentPassword || !confirmPassword || !newPassword) {
         return res.status(400).json({
           msg: "All fields is require.",
@@ -151,7 +151,7 @@ router.post(
         });
       }
 
-      // If current password is matchs with new password or confirm password will be send error message
+      // If current password is match with new password or confirm password will be send error message
       if (
         currentPassword === newPassword ||
         currentPassword === confirmPassword
@@ -163,7 +163,7 @@ router.post(
 
       // Comparing current password with user password stored in DB.
       if (await bcrypt.compare(currentPassword, user.passwordHash)) {
-        // If both password matchs, I will create saltRounds to hash password.
+        // If both password match, I will create saltRounds to hash password.
         // The higher salt is the more time the hashing takes, I select a number that is high enough to prevent attacks, but not slower than potential user patience. I I'm using default value, 10.
         const salt = await bcrypt.genSalt(salt_rounds);
 
