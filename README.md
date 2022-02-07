@@ -37,4 +37,5 @@ A server at http://localhost:4000 is started.
 - JavaScript
 - ExpressJS
 - NodeJS
+- JWT Auth
 - Mongoose
